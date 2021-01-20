@@ -1,4 +1,4 @@
-package com.mw.mwvideo.IJKVideoPlayer;
+package com.mw.ijkplayer_componts.IJKVideoPlayer;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 

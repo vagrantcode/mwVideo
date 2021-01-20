@@ -1,3 +1,4 @@
+include ':ijkplayer-componts'
 include ':ijkplayer-java'
 include ':app'
 rootProject.name = "mwVideo"

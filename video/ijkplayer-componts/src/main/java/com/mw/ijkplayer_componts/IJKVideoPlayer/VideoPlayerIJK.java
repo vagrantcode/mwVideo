@@ -1,4 +1,4 @@
-package com.mw.mwvideo.IJKVideoPlayer;
+package com.mw.ijkplayer_componts.IJKVideoPlayer;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -19,12 +19,13 @@ import java.util.regex.Pattern;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
+
 public class VideoPlayerIJK extends FrameLayout {
     /**
      * 由ijkplayer提供，用于播放视频，需要给他传入一个surfaceView
      */
     private IMediaPlayer mMediaPlayer = null;
-    private String pathType="rtsp";
+    private String pathType = "rtsp";
 
     /**
      * 视频文件地址
@@ -33,7 +34,6 @@ public class VideoPlayerIJK extends FrameLayout {
 
     private SurfaceView surfaceView;
 
-    private VideoPlayerListener listener;
     private Context mContext;
 
     public VideoPlayerIJK(@NonNull Context context) {
@@ -78,28 +78,30 @@ public class VideoPlayerIJK extends FrameLayout {
       pathType=  getPathType();
         createSurfaceView();*/
     }
-private String getPathType(){
-    // 按指定模式在字符串查找
-    String line = mPath;
-    String pattern = "(https|http)(:.*)";
 
-    // 创建 Pattern 对象
-    Pattern r = Pattern.compile(pattern);
+    private String getPathType() {
+        // 按指定模式在字符串查找
+        String line = mPath;
+        String pattern = "(https|http)(:.*)";
 
-    // 现在创建 matcher 对象
-    Matcher m = r.matcher(line);
-    if (m.find( )) {
+        // 创建 Pattern 对象
+        Pattern r = Pattern.compile(pattern);
+
+        // 现在创建 matcher 对象
+        Matcher m = r.matcher(line);
+        if (m.find()) {
       /*  System.out.println("Found value: " + m.group(0) );
         System.out.println("Found value: " + m.group(1) );
         System.out.println("Found value: " + m.group(2) );
         System.out.println("Found value: " + m.group(3) );*/
-      if(m.group(1).equals("http")){
-          return "http";
-      }
-      return "rtsp";
+            if (m.group(1).equals("http")) {
+                return "http";
+            }
+            return "rtsp";
+        }
+        return "rtsp";
     }
-    return "rtsp";
-}
+
     /**
      * 新建一个surfaceview
      */
@@ -147,7 +149,7 @@ private String getPathType(){
         try {
             mMediaPlayer.setDataSource(mPath);
         } catch (Exception e) {
-            Log.i("sdfasdfa",""+e);
+            Log.i("sdfasdfa", "" + e);
             e.printStackTrace();
         }
         //给mediaPlayer设置视图
@@ -167,7 +169,7 @@ private String getPathType(){
 
         }
         IjkMediaPlayer ijkMediaPlayer = new IjkMediaPlayer();
-       // ijkMediaPlayer.native_profileEnd();
+        // ijkMediaPlayer.native_profileEnd();
         //ijkMediaPlayer.native_setLogLevel(IjkMediaPlayer.IJK_LOG_ERROR);
 
         /**
@@ -188,11 +190,7 @@ private String getPathType(){
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 1);
         // 不额外优化（使能非规范兼容优化，默认值0 ）
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "fast", 1);
-        switch (pathType){
-            case "http":
-                // 是否开启预缓冲，一般直播项目会开启，达到秒开的效果，不过带来了播放丢帧卡顿的体验(1开启，0关闭)
-                ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0);
-                break;
+        switch (pathType) {
             default:
                 // 是否开启预缓冲，一般直播项目会开启，达到秒开的效果，不过带来了播放丢帧卡顿的体验(1开启，0关闭)
                 ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0);
@@ -204,7 +202,7 @@ private String getPathType(){
         // 处理分辨率变化
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-handle-resolution-change", 1);
         // 最大缓冲大小,单位kb
-        ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "max-buffer-size", 1024*1024);
+        ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "max-buffer-size", 1024 * 1024);
         // 默认最小帧数2
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "min-frames", 5);
         // 默认最大帧数30
@@ -216,7 +214,7 @@ private String getPathType(){
         // 缩短播放的rtmp视频延迟在1s内
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "fflags", "nobuffer");
         // 播放前的探测Size，默认是1M, 改小一点会出画面更快
-        ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 1024L*5); //1024L)
+        ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 1024L * 5); //1024L)
         // 播放重连次数
         ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "reconnect", 5);
         // TODO:
@@ -248,7 +246,7 @@ private String getPathType(){
         }
     }
 
-
+    private VideoPlayerListener listener;
     public void setListener(VideoPlayerListener listener) {
         this.listener = listener;
         if (mMediaPlayer != null) {
